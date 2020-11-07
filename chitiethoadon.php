@@ -95,7 +95,7 @@
             }
         }
     }
-    
+    $id=intval(getInput('id'));
     if(isset($_GET['page']))
     {
         $p= $_GET['page'];
@@ -105,8 +105,10 @@
     {
         $p=1;
     }
-    $sql= "SELECT * FROM hoadon  where '$id' = hoadon.users_id ";
-    $hoadon=$db->fetchJone('hoadon',$sql,$p,9,true);
+    //$sql= "SELECT * FROM orders  where '$id' = orders.hoadon_id ";
+    $sql= "SELECT orders.*,product.id as id_name,  product.name as nameproduct, product.price as gia, product.sale as giam,product.thunbar as anh, orders.qty as soluongmua
+    FROM hoadon LEFT JOIN orders on orders.hoadon_id=hoadon.id JOIN product on product.id=orders.product_id where '$id' = orders.hoadon_id ORDER BY ID DESC   ";
+    $hoadon=$db->fetchJone('hoadon',$sql,$p,10,true);
     if(isset($hoadon['page']))
     {
         $sotrang = $hoadon['page'];
@@ -211,18 +213,18 @@
             <br>
             <br><br>
         <div>
-        <h3>Sản phẩm đã đặt</h3>
+        <h3>Chi tiết hóa đơn mã: <?php echo $id; ?></h3>
         <br><br><br>
         <table class="table table-bordered" id="dataTable" style="width:100%;height:300px"" cellspacing="0">
                 <thead>
                     <tr>
                         <th>STT</th>
 
-                        <th>Mã hóa đơn</th>
+                        <th>Tên phụ kiện</th>
+                        <th>Ảnh</th>
                         
-                        <th>Tổng số tiền</th>
-                        <th>Ngày thanh toán:</th>
-                        
+                        <th>Giá/Số lượng mua</th>
+                        <th>Thời gian</th>
                         
                     </tr>
                 </thead>
@@ -233,10 +235,14 @@
                     foreach($hoadon as $item): ?>
                     <tr>
                         <td style="width:5%;"><?php echo $stt ?></td>
-                        <td style="width:15%;"><a href="chitiethoadon.php?id=<?php echo $item['id'] ?>"><?php echo $item['id'] ?></a></td>
-                        <td style="width:15%;"> Tổng tiền: <?php echo formatPrice( $item['amount']) ?>VNĐ</td>
+                        <td style="width:15%;"><a href="chitietsanpham.php?id=<?php echo $item['id_name']?>"><?php echo $item['nameproduct']?></a></td>
+                        <td style="width:15%;"><img src="admin/modules/product/images/<?php echo $item['anh']?>" alt=""></td>
+                        <td style="width:15%;"> Giá: <?php echo formatPrice( $item['gia']) ?>VNĐ
+
+                            <br>Số lượng:<?php echo formatPrice( $item['soluongmua']) ?>
+                            <br>Giảm:<?php echo $item['giam'] ?>%</td>
+                            
                         <td style="width:15%;"> <?php echo $item['update_at'] ?></td>
-                      
                     </tr>
                     <?php $stt++;endforeach ?>
                 </tbody>

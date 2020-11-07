@@ -81,6 +81,65 @@
 		<script src="js/main.js"></script>
 		<div id="fb-root"></div>
 		<script async defer crossorigin="anonymous" src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v6.0"></script>
+		<style>
+		.float-contact {
+				position: fixed;
+				bottom: 40px;
+				right: 20px;
+				z-index: 99999;
+				}
+				.chat-zalo {
+				background: yellow;
+				border-radius: 20px;
+				padding: 0 18px;
+				color: white;
+				display: block;
+				margin-bottom: 6px;
+				}
+				.chat-face {
+				background: #125c9e;
+				border-radius: 20px;
+				padding: 0 18px;
+				color: white;
+				display: block;
+				margin-bottom: 6px;
+				}
+				.float-contact .hotline {
+				background: red!important;
+				border-radius: 20px;
+				padding: 0 18px;
+				color: white;
+				display: block;
+				margin-bottom: 6px;
+				}
+				.chat-zalo a, .chat-face a, .hotline a {
+				font-size: 15px;
+				color: white;
+				font-weight: 400;
+				text-transform: none;
+				line-height: 0;
+				}
+					.float-contact .chat-zalo:hover, .float-contact .chat-face:hover, .float-contact .hotline:hover{
+				box-shadow: -3px 2px 2px 1px #121111;
+				}
+				@media (max-width: 549px){
+					.float-contact{
+					 display:none 
+				}
+			}</style>
+			<div class="float-contact">
+				<button class="chat-zalo">
+				<a href="http://zalo.me/0779235213">Chat Zalo</a>
+				</button>
+				<button class="chat-face">
+				<a href="https://www.facebook.com/profile.php?id=100010150744102">Chat Facebook</a>
+				</button>
+				<button class="hotline">
+				<a href="tel:0787166699">Hotline:0787166699</a>
+				</button>
+			</div>
+
+
 	</body>
 </html>
 

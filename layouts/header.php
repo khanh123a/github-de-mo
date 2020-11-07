@@ -12,11 +12,12 @@
 		<link rel="stylesheet" href="css/responsive.css">
 		<link rel="stylesheet" type="text/css" href="public/frontend/css/style2.css"/>
 	</head>
+	
 	<body>
 		<?php 
 		
 		?>
-
+		
 		<div id="wallpaper">
 
 			<header>

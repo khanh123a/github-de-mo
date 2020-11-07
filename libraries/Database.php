@@ -139,6 +139,12 @@
             $result = mysqli_query($this->link,$sql) or die("Lỗi  truy vấn fetchID " .mysqli_error($this->link));
             return mysqli_fetch_assoc($result); //sẽ tìm và trả về một dòng kết quả của một truy vấn MySQL nào đó dưới dạng một mảng kết hợp.
         }
+        public function fetchID2($table , $id )
+        {
+            $sql = "SELECT * FROM {$table} WHERE users_id = $id ";
+            $result = mysqli_query($this->link,$sql) or die("Lỗi  truy vấn fetchID " .mysqli_error($this->link));
+            return mysqli_fetch_assoc($result); //sẽ tìm và trả về một dòng kết quả của một truy vấn MySQL nào đó dưới dạng một mảng kết hợp.
+        }
 //Kiểm tra xem danh mục đã tồn tại sản phẩm chưa mới được phép xóa----
         public function fetchOne($table , $query)
         {

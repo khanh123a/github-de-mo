@@ -2,27 +2,34 @@
 <?php 
     $sqlhome = "SELECT * FROM product ORDER BY name DESC ";
     //$sqlhome = "SELECT * FROM product ORDER BY price DESC ";
-    $CategoryHome=$db->fetchsql($sqlhome);
+    $product = $db->fetchAll("product");
 	if (isset($_POST["search"]))
 		{
 		$nhap=$_POST['nhap'];
 		$search= "SELECT * FROM product WHERE name LIKE '%$nhap%' ORDER BY ID DESC ";	
 		$searchproduct= $db ->fetchsql($search);
 		}
-		
-    $data=[];
-    //Lấy tất cả id và tên có trong danh mục để đưa ra tt
-    foreach($CategoryHome as $item)
-    {
-        $allId= intval($item['id']);
-        $sql = "SELECT * FROM product WHERE category_id = $allId ";
-        $productHome = $db -> fetchsql($sql);
-        // đổi thành mảng nhiều chiều cho từng danh mục 
-		$data[$item['name']]=$productHome;
-
-		
+	if(isset($_GET['page']))
+		{
+			$p= $_GET['page'];
+	
+		}
+	else
+		{
+			$p=1;
+		}
     
-}
+    //Lấy tất cả id và tên có trong danh mục để đưa ra tt
+	$sql= "SELECT * FROM product";
+    $product = $db -> fetchJone('product',$sql,$p,50,true);
+	//Phân trang
+	if(isset($product['page']))
+	{
+		$sotrang = $product['page'];
+		unset($product['page']);
+
+	}
+
 ?>
 <?php require_once __DIR__. "/layouts/header.php"; ?>   
 							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-9 order-lg-1 order-0">
@@ -59,25 +66,14 @@
 										</div>
 												
 									</div>
-
-							
-							
-								
-									
-									
 								
 								<br>
 								<br>
-
-
-
 								<div class="product-section">
 								
-									
-									
 									<div class="content-product-box">
 										<div class="row">
-										<?php foreach($CategoryHome as $item): ?>
+										<?php foreach($product as $item): ?>
 											<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
 												<div class="item-product">
 												
@@ -112,6 +108,40 @@
 							
 								</div>
 							</div>
+							<div class="pull-right">
+                                    <!--Phân trang-->
+                                    <nav aria-label="Page navigation example" >
+                                        <ul class="pagination">
+                                            <li class="page-item">
+                                                <a href="" aria-label="Previous" class="page-link">
+                                                    <span aria-hidden="true">&laquo;</span>
+                                                </a> 
+                                            </li>
+                                            <?php for( $i=1 ; $i<=$sotrang ; $i++ ): ?>
+                                             <?php
+                                                if(isset($_GET['page']))
+                                                {
+                                                    $p=$_GET['page'];
 
+                                                }
+                                                else
+                                                {
+                                                    $p=1;
+                                                } ?>
+                                                
+                                                <!--Số trang-->
+                                                <li class="<?php echo ($i == $p)? 'active' : '' ?>">
+                                                <a href="?page=<?php echo $i ; ?>" class="page-link"><?php echo $i; echo "  ";  ?></a>
+                                            <?php endfor; ?>
+
+                                            </li>
+                                            <li class="page-item">
+                                            <a href="" aria-label="Next" class="page-link">
+                                                    <span aria-hidden="true">&raquo;</span>
+                                                </a> 
+                                            </li>
+                                        </ul>
+                                    </nav>
+                                    </div>
 
 <?php require_once __DIR__. "/layouts/footer.php"; ?>
