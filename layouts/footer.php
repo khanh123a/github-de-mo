@@ -5,7 +5,7 @@
 					</div>
 				</div>
 			</div>
-<footer>
+			<footer>
 				<div class="container">
 					<div class="row">
 						<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
@@ -89,7 +89,7 @@
 				z-index: 99999;
 				}
 				.chat-zalo {
-				background: yellow;
+				background: green;
 				border-radius: 20px;
 				padding: 0 18px;
 				color: white;
@@ -128,8 +128,8 @@
 				}
 			}</style>
 			<div class="float-contact">
-				<button class="chat-zalo">
-				<a href="http://zalo.me/0779235213">Chat Zalo</a>
+				<button class="chat-zalo" >
+				<a href="http://zalo.me/0779235213" >Chat Zalo</a>
 				</button>
 				<button class="chat-face">
 				<a href="https://www.facebook.com/profile.php?id=100010150744102">Chat Facebook</a>
@@ -138,7 +138,7 @@
 				<a href="tel:0787166699">Hotline:0787166699</a>
 				</button>
 			</div>
-
+		
 
 	</body>
 </html>

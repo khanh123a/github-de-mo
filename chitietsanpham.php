@@ -20,14 +20,14 @@
                 <th>
                 <img src="admin/modules/product/images/<?php echo $productz['thunbar'] ?>"  width="300px" height="370px" >
                 </th>
-                <th>
+                <th  style="width: 450px;" >
                     <ul id="right" style="font-size: 18px;">
                         <li><h3 style="font-family: Arial;"><?php echo $productz['name'] ?></h3></li>
                         <li><p>Giá niêm yết: <strike><?php echo formatPrice2($productz['price']) ?></strike> đ </p></li>
                         <li><p style="color: red;">Sale off: -<?php echo $productz['sale'] ?>% <b class="price">
                         <br><br> Giá sau khi giảm:<?php echo formatPrice2(money($productz['price'],$productz['sale'])) ?>đ</b</li>
                         <li><p >Đã bán:<?php echo $productz['pay'] ?> <br> Còn:<?php echo $productz['number'] ?> <b class="price">
-                        <li style="background: yellow; width: 200px;"><a href="addcart.php?id=<?php echo  $productz['id'] ?> ?>" class="btn btn-default"> <i class="fa fa-shopping-basket" ></i>Thêm vào giỏ hàng</a></li>
+                        <li style="background: green; width: 200px; font-size: 30px;"><a href="addcart.php?id=<?php echo  $productz['id'] ?> ?>" class="btn btn-default"> <i class="fa fa-shopping-basket" ></i>Thêm vào giỏ hàng</a></li>
 
                     </ul>
 

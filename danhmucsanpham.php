@@ -4,7 +4,13 @@
     $id= intval(getInput('id'));
     $editCategory=$db->fetchID("category",$id);
     //Hàm phân trang ở database
-    // kiểm tra xem hiện đang ở trong bn?
+    // kiểm tra xem hiện đang ở trang bn?
+    if (isset($_POST["search"]))
+		{
+		$nhap=$_POST['nhap'];
+		$search= "SELECT * FROM product WHERE name LIKE '%$nhap%' ORDER BY ID DESC ";	
+		$searchproduct= $db ->fetchsql($search);
+		}
     if(isset($_GET['p']))
     {
         $p = $_GET['p'];
@@ -30,6 +36,42 @@
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-9 order-lg-1 order-0">
     <div class="product-section">
         <div class="content-product-box">
+        <h3>Sản phẩm bạn tìm kiếm</h3>
+            <div class="row">
+            <?php foreach($searchproduct as $item): ?>
+                <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                    <div class="item-product">
+                    
+                        <div class="thumb">
+                            <a href="chitietsanpham.php?id=<?php echo $item['id'] ?>"><img src="admin/modules/product/images/<?php echo $item['thunbar'] ?>" alt=""></a>
+                            <span class="sale">Giảm <br><?php echo $item['sale'] ?></span>
+                            <div class="action">
+                                <a href="addcart.php?id=<?php echo $item['id'] ?>" class="buy"><i class="fa fa-cart-plus"></i>Add Cart</a>
+                                <a href="#" class="like"><i class="fa fa-heart"></i> Yêu thích</a>
+                                <div class="clear"></div>
+                            </div>
+                        </div>
+                        <div class="info-product">
+                            <h4><a href="chitietsanpham.php?id=<?php echo $item['id'] ?>"><?php echo $item['name'] ?></a></h4>
+                            <div class="price">
+                                <span class="price-current">Giá:<?php echo formatPrice2(money($item['price'],$item['sale'])) ?>đ</span>
+                                <span class="price-old"><?php echo formatPrice2($item['price'])  ?>₫</span>
+                            </div>
+                            <a href="chitietsanpham.php?id=<?php echo $item['id'] ?>" class="view-more">Xem chi tiết</a>
+                        </div>
+                        
+                    </div>
+                </div>
+                <?php endforeach ?>		
+                
+            </div>
+                    
+        </div>
+    
+    <br>
+    <br>
+
+
             <h3><?php echo $editCategory['name'] ?></h3>
                 <div class="row">
                 <?php foreach($product as $item): ?>

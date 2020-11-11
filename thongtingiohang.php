@@ -1,5 +1,9 @@
 <?php require_once __DIR__. "/autoload/autoload.php"; 
-$sumall=0;
+if( !isset($_SESSION['name_id']))
+{
+    echo "<script> alert('Xin mời bạn đăng nhập!');location.href='dangnhap.php' </script>";
+}
+    $sumall=0;
     if(!isset($_SESSION['cart']) || count($_SESSION['cart'])==0)
     {
        
@@ -22,11 +26,11 @@ $sumall=0;
                             
                             
                             <table class="table talbe-hover" CELLSPACING = 2; border="1";style="width: 900px;"  >
-                                <thead style="background-color:yellow" >
+                                <thead style="background-color:silver" >
                                     <tr>
-                                        <th>STT</th>
+                                        <th style="width: 5px;">STT</th>
                                         <th style="width: 90px;">Tên phụ kiện</th>
-                                        <th>Hình ảnh</th>
+                                        <th >Hình ảnh</th>
                                         <th>Số lượng</th>
                                         <th>Giá</th>
                                         <th>Tổng tiền</th>
@@ -39,7 +43,7 @@ $sumall=0;
                                             <td><?php echo $stt ?></td>
                                             <td ><a href="chitietsanpham.php?id=<?php echo $value['id'] ?>"> <?php echo $value['name'] ?></a> </td>
                                             <td>
-                                                <img src="admin/modules/product/images/<?php echo $value['thunbar'] ?>" alt="" width="100px" height="120px">
+                                                <img src="admin/modules/product/images/<?php echo $value['thunbar'] ?>" alt="" width="120px" height="120px">
                                             </td>
                                             <td>
                                                 <input type="number" name="qty"  value="<?php echo $value['qty'] ?>" class="form-control qty" style="width: 60px;" id="qty" min="0"  >    
@@ -52,7 +56,7 @@ $sumall=0;
                                             </td>
                                             <td><?php echo  formatPrice2($value['price'] * $value['qty']) ?>VNĐ</td>
                                             <td style="width: 150px;"> 
-                                                    <a href="#" class="btn btn-xs btn-info updatecart" data-key=<?php echo $key ?> >
+                                                    <a href="thongtingiohang_capnhat.php?key=<?php echo $key ?>" class="btn btn-xs btn-info updatecart" data-key=<?php echo $key ?> >
                                                     <i class="fa fa-refresh"></i>Cập nhật</a>
 
 
@@ -96,7 +100,7 @@ $sumall=0;
                                     </span>
                                 </li>
                                 <li class="list-group-item">
-                                    <a class="btn btn-xs btn-danger" href="index.php" >
+                                    <a class="btn btn-xs btn-success" href="index.php" >
                                         </i>Tiếp tục mua hàng
                                     </a>
                                     <a class="btn btn-xs btn-success" href="thanhtoan.php"  >

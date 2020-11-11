@@ -3,6 +3,5 @@
     $qty= intval(getInput("qty"));
     //Sản phẩm cần sửa và số lượng cần sửa-lấy từ giỏ hàng chiếu đến từng dòng
     $_SESSION['cart'][$key]['qty'] = $qty;
-    
     echo 1;
 ?>

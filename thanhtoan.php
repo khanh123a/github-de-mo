@@ -82,7 +82,7 @@ if ($_SERVER["REQUEST_METHOD"]=="POST")
 
                                     <label >Số tiền phải thanh toán:</label>
                                 <div style="width: 500px; " >
-                                     <input  type="text" name="total" readonly placeholder="Số nhà, đường, phố, quận, huyện, thành phố" class="form-control"
+                                     <input  type="text" name="total" readonly " class="form-control"
                                      value="<?php echo formatPrice2($_SESSION['total']); ?> VNĐ">
                                     </div>
                                     

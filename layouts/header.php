@@ -6,8 +6,8 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>Website phụ kiện điện thoại</title>
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i">
-		<link rel="stylesheet" href="libs/bootstrap/css/bootstrap.min.css">
-		<link rel="stylesheet" href="libs/font-awesome/css/font-awesome.min.css">
+		<link rel="stylesheet" href="public/libs/bootstrap/css/bootstrap.min.css">
+		<link rel="stylesheet" href="public/libs/font-awesome/css/font-awesome.min.css">
 		<link rel="stylesheet" href="css/main.css">
 		<link rel="stylesheet" href="css/responsive.css">
 		<link rel="stylesheet" type="text/css" href="public/frontend/css/style2.css"/>
@@ -36,7 +36,7 @@
 									<?php if(isset($_SESSION['name_user'])):?>
 									<li style="color: red;font-family: Arial, Helvetica, sans-serif;">Chào: <?php echo $_SESSION['name_user'] ?></li><li>
 										
-										<li><a href="thongtincanhan.php">Thông tin cá nhân</a></li>
+										<li><a href="thongtincanhan2.php">Thông tin cá nhân</a></li>
 										<li><a href="thongtingiohang.php">Giỏ hàng</a></li>
 										<li><a href="exit.php">Đăng Xuất</a></li>
 										<?php else: ?>
@@ -77,7 +77,9 @@
 									</form>
 								</div>
 							</div>
+							<?php if(isset($_SESSION['name_user'])):?>
 							<div class="col-6 col-xs-6 col-sm-6 col-md-3 col-lg-3 order-md-2 order-1" style="text-align: right">
+							
 								<a href="thongtingiohang.php" class="icon-cart">
 									<div class="icon">
 										<i class="fa fa-shopping-cart" aria-hidden="true"></i>
@@ -89,7 +91,9 @@
 									</div>
 									<span class="clear"></span>
 								</a>
+							
 							</div>
+							<?php endif; ?>
 						</div>
 					</div>
 				</div>
@@ -113,7 +117,7 @@
 								</li>
 								
 								
-								<li><a href="#">Liên hệ</a></li>
+								
 							</ul>
 							<div class="clear"></div>
 						</div>
@@ -211,7 +215,7 @@
 											Facebook
 										</h3>
 										<div class="content-fb">
-											<div class="fb-page" data-href="https://www.facebook.com/huykiradotnet/" data-tabs="timeline" data-width="" data-height="200" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"></div>
+											<div class="fb-page" data-href="https://www.facebook.com/huykiradotnet/" data-tabs="timeline" data-width="" data-height="200" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"></div> 
 										</div>
 									</div>
 									<div class="widget">

@@ -5,120 +5,120 @@
     {
         echo "<script> alert('Xin mời bạn đăng nhập!');location.href='dangnhap.php' </script>";
     }
-    
-    $id= intval($_SESSION['name_id']);
-    $thongtin=$db->fetchID("user",$id);
-    if(empty($thongtin))
-    {
-        $_SESSION['error']="Dữ liệu người dùng không tồn tại";
-        redirectUrl("thongtincanhan.php");
+    else{
+        $id= intval($_SESSION['name_id']);
+        $thongtin=$db->fetchID("user",$id);
+        if(empty($thongtin))
+        {
+            $_SESSION['error']="Dữ liệu người dùng không tồn tại";
+            redirectUrl("thongtincanhan.php");
 
-    }
-    if ($_SERVER["REQUEST_METHOD"]=="POST")
-    {
-        $data=
-        [
-            "name" => postInput('name'),
-            "email" => postInput("email"),
-            "password" => MD5(postInput("password")),
-            "address" => postInput("address"),
-            "phone" => postInput("phone")
-            //"images"=> postInput('image')
-        ];
-        $error=[];
-       
-        if(postInput('name')=='')
-        {
-            $error['name']="Mời nhập họ và tên!";
         }
-        if(postInput('email')=='')
+        if ($_SERVER["REQUEST_METHOD"]=="POST")
         {
-            $error['email']="Mời bạn nhập đúng email!";
-        }
-        /*else
-        {
-            $count_insert = $db -> fetchOne("admin"," email= '" .$data['email']."'");
-            if(count($count_insert)>0)
+            $data=
+            [
+                "name" => postInput('name'),
+                "email" => postInput("email"),
+                "password" => MD5(postInput("password")),
+                "address" => postInput("address"),
+                "phone" => postInput("phone")
+                //"images"=> postInput('image')
+            ];
+            $error=[];
+        
+            if(postInput('name')=='')
             {
-                $_SESSION["error"]="email đã tồn tại";
+                $error['name']="Mời nhập họ và tên!";
             }
-        }*/
-        if(postInput('password')=='')
-        {
-            $error['password']="Bạn chưa nhập mật khẩu!";
-        }
-        if(postInput('password_re')=='')
-        {
-            $error['password_re']="Bạn chưa nhập lại mật khẩu!";
-        }
-        if(postInput('address')=='')
-        {
-            $error['address']="Mời bạn nhập địa chỉ nào!";
-        }
-        if(postInput('phone')=='')
-        {
-            $error['phone']="Mời bạn nhập số điện thoại!";
-        }
-      
-        //
-        if($data['password'] != MD5(postInput("password_re")))
-        {
-            $error['password']="Mật khẩu không khớp";
-        }
-        if(empty($error))
-        {
-            if( isset($_FILES['anh']))
+            if(postInput('email')=='')
             {
-                $file_name=$_FILES['anh']['name'];
-                $file_tmp=$_FILES['anh']['tmp_name'];
-                $file_type=$_FILES['anh']['type'];
-                $file_erro=$_FILES['anh']['error'];
-                if($file_erro == 0)
+                $error['email']="Mời bạn nhập đúng email!";
+            }
+            /*else
+            {
+                $count_insert = $db -> fetchOne("admin"," email= '" .$data['email']."'");
+                if(count($count_insert)>0)
                 {
-                    $part = ROOT ."images/user/"; // trỏ tới file chứa ảnh
-                    $data['anh'] = $file_name;
+                    $_SESSION["error"]="email đã tồn tại";
                 }
+            }*/
+            if(postInput('password')=='')
+            {
+                $error['password']="Bạn chưa nhập mật khẩu!";
+            }
+            if(postInput('password_re')=='')
+            {
+                $error['password_re']="Bạn chưa nhập lại mật khẩu!";
+            }
+            if(postInput('address')=='')
+            {
+                $error['address']="Mời bạn nhập địa chỉ nào!";
+            }
+            if(postInput('phone')=='')
+            {
+                $error['phone']="Mời bạn nhập số điện thoại!";
+            }
+        
+            //
+            if($data['password'] != MD5(postInput("password_re")))
+            {
+                $error['password']="Mật khẩu không khớp";
+            }
+            if(empty($error))
+            {
+                if( isset($_FILES['anh']))
+                {
+                    $file_name=$_FILES['anh']['name'];
+                    $file_tmp=$_FILES['anh']['tmp_name'];
+                    $file_type=$_FILES['anh']['type'];
+                    $file_erro=$_FILES['anh']['error'];
+                    if($file_erro == 0)
+                    {
+                        $part = ROOT ."images/user/"; // trỏ tới file chứa ảnh
+                        $data['anh'] = $file_name;
+                    }
 
-                $id_insert=$db -> update("user",$data,array("id"=>$id));
-                if($id_insert)
-                {  //auto di chuyển ảnh vào file websitephukien\public\uploads\user
-                    move_uploaded_file($file_tmp,$part.$file_name);
-                    $_SESSION['success']="Cập nhật thành công";
-                    redirectUrl2("thongtincanhan.php");
-                }
-                else
-                {
-                    $_SESSION['error']="Cập nhật thất bại";
-                    redirectUrl2("thongtincanhan.php");
-                        
+                    $id_insert=$db -> update("user",$data,array("id"=>$id));
+                    if($id_insert)
+                    {  //auto di chuyển ảnh vào file websitephukien\public\uploads\user
+                        move_uploaded_file($file_tmp,$part.$file_name);
+                        $_SESSION['success']="Cập nhật thành công";
+                        redirectUrl2("thongtincanhan2.php");
+                    }
+                    else
+                    {
+                        $_SESSION['error']="Cập nhật thất bại";
+                        redirectUrl2("thongtincanhan2.php");
+                            
+                    }
                 }
             }
         }
-    }
+        
+        if(isset($_GET['page']))
+        {
+            $p= $_GET['page'];
+
+        }
+        else
+        {
+            $p=1;
+        }
+        $sql= "SELECT * FROM hoadon  where '$id' = hoadon.users_id ";
+        $hoadon=$db->fetchJone('hoadon',$sql,$p,9,true);
+        if(isset($hoadon['page']))
+        {
+            $sotrang = $hoadon['page'];
+            unset($hoadon['page']);
+
+        }
+
+
+
+        //lay id danh muc trong sp ép kiểu
     
-    if(isset($_GET['page']))
-    {
-        $p= $_GET['page'];
-
-    }
-    else
-    {
-        $p=1;
-    }
-    $sql= "SELECT * FROM hoadon  where '$id' = hoadon.users_id ";
-    $hoadon=$db->fetchJone('hoadon',$sql,$p,9,true);
-    if(isset($hoadon['page']))
-    {
-        $sotrang = $hoadon['page'];
-        unset($hoadon['page']);
-
-    }
-
-
-
-     //lay id danh muc trong sp ép kiểu
-   
-
+        }
  ?>
  
  
@@ -205,79 +205,15 @@
                     </table>
                     <div class="col-sm-offset-2 col-sm-10">
                     <button type="submit" class="btn btn-success">Cập nhật</button>
+                    &emsp;
+                    <a href="thongtincanhan2.php" class="btn btn-success" >Quay lại</a>
                     </div>  
                                    
             </form>
             <br>
             <br><br>
         <div>
-        <h3>Sản phẩm đã đặt</h3>
-        <br><br><br>
-        <table class="table table-bordered" id="dataTable" style="width:100%;height:300px"" cellspacing="0">
-                <thead>
-                    <tr>
-                        <th>STT</th>
-
-                        <th>Mã hóa đơn</th>
-                        
-                        <th>Tổng số tiền</th>
-                        <th>Ngày thanh toán:</th>
-                        
-                        
-                    </tr>
-                </thead>
-                
-                <tbody>
-                    <?php 
-                    $stt=1;
-                    foreach($hoadon as $item): ?>
-                    <tr>
-                        <td style="width:5%;"><?php echo $stt ?></td>
-                        <td style="width:15%;"><a href="chitiethoadon.php?id=<?php echo $item['id'] ?>"><?php echo $item['id'] ?></a></td>
-                        <td style="width:15%;"> Tổng tiền: <?php echo formatPrice( $item['amount']) ?>VNĐ</td>
-                        <td style="width:15%;"> <?php echo $item['update_at'] ?></td>
-                      
-                    </tr>
-                    <?php $stt++;endforeach ?>
-                </tbody>
-            </table>
-
-            <!-- Phân trang -->
-            <div class="pull-right">
-                                    <!--Phân trang-->
-                                    <nav aria-label="Page navigation example" >
-                                        <ul class="pagination">
-                                            <li class="page-item">
-                                                <a href="" aria-label="Previous" class="page-link">
-                                                    <span aria-hidden="true">&laquo;</span>
-                                                </a> 
-                                            </li>
-                                            <?php for( $i=1 ; $i<=$sotrang ; $i++ ): ?>
-                                             <?php
-                                                if(isset($_GET['page']))
-                                                {
-                                                    $p=$_GET['page'];
-
-                                                }
-                                                else
-                                                {
-                                                    $p=1;
-                                                } ?>
-                                                
-                                                <!--Số trang-->
-                                                <li class="<?php echo ($i == $p)? 'active' : '' ?>">
-                                                <a href="?page=<?php echo $i ; ?>" class="page-link"><?php echo $i; echo "  ";  ?></a>
-                                            <?php endfor; ?>
-
-                                            </li>
-                                            <li class="page-item">
-                                            <a href="" aria-label="Next" class="page-link">
-                                                    <span aria-hidden="true">&raquo;</span>
-                                                </a> 
-                                            </li>
-                                        </ul>
-                                    </nav>
-                                    </div>
+        
                                     
 
         </div>
