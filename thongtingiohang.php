@@ -3,19 +3,65 @@ if( !isset($_SESSION['name_id']))
 {
     echo "<script> alert('Xin mời bạn đăng nhập!');location.href='dangnhap.php' </script>";
 }
-    $sumall=0;
-    if(!isset($_SESSION['cart']) || count($_SESSION['cart'])==0)
-    {
-       
-        echo "<script> alert('Trong giỏ hàng của bạn ko có sản phẩm thanh toán!');location.href='index.php' </script>";
-    }
+$sumall=0;
+if(!isset($_SESSION['cart']) || count($_SESSION['cart'])==0)
+{
+    
+    echo "<script> alert('Trong giỏ hàng của bạn ko có sản phẩm thanh toán!');location.href='index.php' </script>";
+}
+if ($_SERVER["REQUEST_METHOD"]=="POST")
+{
+   
+    $qty= $_POST["qty"];
+    $id= $_POST["id"];
+        $soluong=intval(getInput(['soluong']));
+        $product=$db->fetchID("product",$id);
+        //Nếu giỏ hàng đã có sản pẩm thì cập nhật thêm, nếu không tạo mới 1 giỏ hàng
+        if(! isset($_SESSION['cart'][$id]))
+        {
+            //tạo mới giỏ hàng
+            $_SESSION['cart'][$id]['name'] = $product['name'];
+            $_SESSION['cart'][$id]['id'] = $product['id'];
+            
+            $_SESSION['cart'][$id]['thunbar'] = $product['thunbar'];
+            $_SESSION['cart'][$id]['qty'] = 1;
+            $_SESSION['cart'][$id]['price'] =((100-$product['sale']) * $product['price'])/100;
+            
+            
+        }
+        else
+        {  
+            if($qty >= $product['number'])
+            {
+                $_SESSION['cart'][$id]['qty'] =$product['number'];
+                echo "<script> alert('Số lượng phụ kiện trong cửa hàng đã đạt tối đa'); location.href='thongtingiohang.php' </script>";
+            }
+            if
+            ($qty <= 1)
+            {
+                $_SESSION['cart'][$id]['qty'] =$product['number'];
+                echo "<script> alert('Số lượng ít nhất là 1'); location.href='thongtingiohang.php' </script>";
+            }
+            //cập nhật lại giỏ hàng khi có sản phẩm trùng
+            else{
+            $_SESSION['cart'][$id]['qty'] = $qty;
+            $_SESSION['success']="Cập nhật thành công sản phẩm!";
+            }
+        }
+        
+        echo "<script> location.href='thongtingiohang.php' </script>";
+
+
+}  
+
+
     
 ?>
 <title>Giỏ Hàng</title>
 <?php require_once __DIR__. "/layouts/header.php"; ?>                
                     <div class="col-md-9 bor" >
                     <?php if(isset($_SESSION['success'])): ?>
-                            <div class="alert alert-danger" >
+                            <div class="alert alert-success" >
                               <strong style="font-size: 20px;"> </strong>
                                   <?php echo $_SESSION['success']; unset($_SESSION['success']) ?>
                               
@@ -24,8 +70,9 @@ if( !isset($_SESSION['name_id']))
                         <section class="box-main1"  style="width: 700px;">
                             <h2 class="title-main">Giỏ hàng của bạn!</h2>
                             
-                            
-                            <table class="table talbe-hover" CELLSPACING = 2; border="1";style="width: 900px;"  >
+                            <form action="" method="POST" class="form-horizontal" role="form">
+                          
+                            <table class="table talbe-hover" CELLSPACING = 2; border="1";style="width: 1000px;"  >
                                 <thead style="background-color:silver" >
                                     <tr>
                                         <th style="width: 5px;">STT</th>
@@ -42,27 +89,34 @@ if( !isset($_SESSION['name_id']))
                                         <tr>
                                             <td><?php echo $stt ?></td>
                                             <td ><a href="chitietsanpham.php?id=<?php echo $value['id'] ?>"> <?php echo $value['name'] ?></a> </td>
-                                            <td>
+                                            <td style="width:160px">
                                                 <img src="admin/modules/product/images/<?php echo $value['thunbar'] ?>" alt="" width="120px" height="120px">
                                             </td>
-                                            <td>
-                                                <input type="number" name="qty"  value="<?php echo $value['qty'] ?>" class="form-control qty" style="width: 60px;" id="qty" min="0"  >    
+                                            <td style="width:160px">
+                                            <form action="" method="POST" class="form-horizontal" role="form">
+                                                <input type="number" name="qty"  value="<?php echo $value['qty']; ?>" class="form-control" style="width: 60px;" id="qty" min="0"  >    
+                                                <input style="display: none;" type="number" name="id"  value="<?php echo $key; ?>" class="form-control" style="width: 60px;" id="qty" min="0"  >   
+                                                <a class="btn btn-xs btn-danger"  href="cart_no.php?id=<?php echo $key ?>"  >
+                                                        -</a>  
+                                                <a class="btn btn-xs btn-success" href="addcart.php?id=<?php echo $key ?>" >
+                                                        +</a>
+                                                        </div>
+                                                        <button type="submit"   class="btn btn-success col-md-8"  style="margin-top: 20px;">Cập nhật</button>
+                                                        
+                                                        </div>        
+                                            </form>
                                             </td>
-                                            <td>
-                                                
-                                                <li><?php echo  formatPrice2($value['price']) ?>VNĐ</li>
-                                              
-                                                
+                                            <td> 
+                                                <?php echo  formatPrice2($value['price']) ?>VNĐ
                                             </td>
                                             <td><?php echo  formatPrice2($value['price'] * $value['qty']) ?>VNĐ</td>
-                                            <td style="width: 150px;"> 
-                                                    <a href="thongtingiohang_capnhat.php?key=<?php echo $key ?>" class="btn btn-xs btn-info updatecart" data-key=<?php echo $key ?> >
-                                                    <i class="fa fa-refresh"></i>Cập nhật</a>
-
-
+                                            <td> 
+                                                    
                                                     <a class="btn btn-xs btn-danger" href="thongtingiohang_delete.php?key=<?php echo $key ?>" >
-                                                    <i class="fa fa-times" ></i>
-                                                    Xóa</a></td>
+                                                    <i class="fa fa-times" ></i>Xóa</a>
+                                                   
+                                                    
+                                            </td>
                                                     
                                         </tr>
                                         <?php $sumall+= $value['price'] * $value['qty'];
@@ -71,6 +125,7 @@ if( !isset($_SESSION['name_id']))
                                    
                                    
                                 </tbody>
+                                </form>
                             </table>
                         <div class="col-md-5 pull-center" >
                            

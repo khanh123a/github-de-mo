@@ -72,7 +72,7 @@
 					</div>
 				</div>
 				<div class="copyright">
-					<p>Copyright © 2020 THIETKEWEB3.COM</p>
+					<p>Copyright © 2020 TienHuyKhanh135.com</p>
 				</div>
 			</footer>
 		</div>
@@ -188,30 +188,52 @@
         })
     })
 
-    //Xứ lý cập nhật số lượng mua
+	//Xứ lý cập nhật số lượng mua
+	function updatecart2()
+	{
+		$qty = <?php echo $_POST["qty"]?>;
+		
+		$key = <?php echo $key ?>;
+		$.ajax({
+			url: 'thongtingiohang_capnhat.php',
+			type: 'GET',
+			data: {'qty':$qty, 'key':$key},
+			success:function(data)
+			{
+				if (data == 1) 
+				{
+					alert('Cập nhật thành công!');
+					location.href='thongtingiohang.php';
+					
+				}
+				else
+				{
+					alert('Cập nhật thất bại!');
+					location.href='thongtingiohang.php';
+				}
+			}
+			});
+	}
+
+
     $(function(){
         $updatecart = $(".updatecart");
         $updatecart.click(function(e) {
             e.preventDefault();
             $qty = $(this).parents("tr").find(".qty").val();
-
+			console.log($qty);
             $key = $(this).attr("data-key");
 
             $.ajax({
-                url: 'thongtingiohang.php',
+                url: 'thongtingiohang_capnhat.php',
                 type: 'GET',
-                data: {'qty': $qty, 'key':$key},
+                data: {'qty':$qty, 'key':$key},
                 success:function(data)
                 {
                     if (data == 1) 
                     {
                         alert('Bạn đã cập nhật giỏ hàng thành công!');
-                        location.href='thongtingiohang_capnhat.php';
-                    }
-                    else
-                    {
-                        alert('Xin lỗi! Số lượng bạn mua vượt quá số lượng hàng có trong kho!');
-                        location.href='thongtingiohang_capnhat.php';
+                        location.href='thongtingiohang.php';
                     }
                 }
             });

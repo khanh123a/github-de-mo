@@ -22,17 +22,18 @@
             
             
         }
+        
         else
         {  
-            if($_SESSION['cart'][$id]['qty'] >= $product['number'])
+            if($_SESSION['cart'][$id]['qty'] <= 1)
             {
                 $_SESSION['cart'][$id]['qty'] =$product['number'];
-                echo "<script> alert('Số lượng phụ kiện trong cửa hàng đã đạt tối đa'); location.href='thongtingiohang.php' </script>";
+                echo "<script> alert('Số lượng ít nhất là 1'); location.href='thongtingiohang.php' </script>";
             }
             //cập nhật lại giỏ hàng khi có sản phẩm trùng
             else{
-            $_SESSION['cart'][$id]['qty'] += 1;
-            $_SESSION['success']="Thêm thành công sản phẩm!";
+            $_SESSION['cart'][$id]['qty'] -= 1;
+            $_SESSION['success']="Giảm thành công!";
             }
         }
         

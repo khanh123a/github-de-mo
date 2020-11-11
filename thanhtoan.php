@@ -12,6 +12,8 @@ if ($_SERVER["REQUEST_METHOD"]=="POST")
     [
         'amount' => $_SESSION['total'],
         'users_id' => $_SESSION['name_id'],
+        'user_name' => postInput("name"),
+        'user_address' => postInput("address"),
         'note' => postInput("note")
         
     ];
@@ -54,22 +56,22 @@ if ($_SERVER["REQUEST_METHOD"]=="POST")
                                 <label style="margin-right:600px; " >Họ và tên:</label>
 
                                 <div style="width: 500px; " >
-                                     <input  type="text" name="name" placeholder="Your name" class="form-control" readonly value="<?php echo $user['name'] ?>">
+                                     <input  type="text" name="name" placeholder="Your name" class="form-control"  value="<?php echo $user['name'] ?>">
                                      </div>
                                      
                                     
                                     <label style="margin-right:600px;">Email:</label>
                                 <div style="width: 500px; " >
-                                     <input  type="email" name="email" placeholder="abc@gmail.com" class="form-control" readonly value="<?php echo $user['email'] ?>">
+                                     <input  type="email" name="email" placeholder="abc@gmail.com" class="form-control"  value="<?php echo $user['email'] ?>">
 
                                     <label >Số điện thoại:</label>
                                 <div style="width: 500px; " >
-                                     <input  type="text" name="phone" placeholder="0123456" class="form-control" readonly value="<?php echo $user['phone'] ?>">
+                                     <input  type="text" name="phone" placeholder="0123456" class="form-control"  value="<?php echo $user['phone'] ?>">
                                     </div>
 
                                     <label >Địa chỉ :</label>
                                 <div style="width: 500px; " >
-                                     <input  type="text" name="address"  readonly value="<?php echo $user['address'] ?>" class="form-control"
+                                     <input  type="text" name="address"   value="<?php echo $user['address'] ?>" class="form-control"
                                      >
                                     </div>
                                     

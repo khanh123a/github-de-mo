@@ -39,7 +39,7 @@
              
                         </div>
                         <div class="form-group row" >
-                            <label for="exampleInputEmail1"><h5>Số điện thoại: &emsp; &emsp; <?php echo $thongtin['phone'] ?></h5></label>
+                            <label for="exampleInputEmail1"><h5>Số điện thoại:  &emsp; <?php echo $thongtin['phone'] ?></h5></label>
              
                         </div>
                          
